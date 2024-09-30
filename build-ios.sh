@@ -92,7 +92,7 @@ rm -r "${UNIVERSAL}/libgsl.xcframework" || true
 rm -r "${UNIVERSAL}/libgslcblas.xcframework" || true
 
 CBLAS_HEADERS="${PREFIX}/cblasinclude"
-mkdir -p "${CBLAS_HEADERS}/gsl"git@github.com:inpulse-vet/gsl-ios.git
+mkdir -p "${CBLAS_HEADERS}/gsl"
 mv "${PREFIX}/include/gsl/gsl_cblas.h" "${CBLAS_HEADERS}/gsl" || true
 
 xcodebuild -create-xcframework \
