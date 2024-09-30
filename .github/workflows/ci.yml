@@ -25,6 +25,11 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install required tools
+        run: |
+          brew update
+          brew install automake libtool
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: ./build.sh
