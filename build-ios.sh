@@ -53,6 +53,7 @@ ScriptDir="$( cd "$( dirname "$0" )" && pwd )"
 PREFIX="${ScriptDir}"/_build
 PLATFORMS="${PREFIX}"/platforms
 UNIVERSAL="${PREFIX}"/universal
+POD="${PREFIX}"/pod
 
 # Compiler options
 OPT_FLAGS="-O3 -g3 -fembed-bitcode"
@@ -86,7 +87,7 @@ HOST_FLAGS="${ARCH_FLAGS} -miphonesimulator-version-min=${MIN_IOS_VERSION} -isys
 CHOST="arm64-apple-darwin"
 Build
 
-# Create universal binary
+# # Create universal binary
 rm "${PREFIX}/include/gsl/test_source.c" || true
 rm -r "${UNIVERSAL}/libgsl.xcframework" || true
 rm -r "${UNIVERSAL}/libgslcblas.xcframework" || true
@@ -107,3 +108,14 @@ xcodebuild -create-xcframework \
     -library ${PLATFORMS}/ios-arm64-simulator/lib/libgsl.a  -headers ${GSL_HEADERS} \
     -library ${PLATFORMS}/macos-x86_64-arm64/lib/libgsl.a  -headers ${GSL_HEADERS} \
     -output ${UNIVERSAL}/libgsl.xcframework;
+
+rm -r ${POD} || true
+mkdir -p ${POD}/Headers
+cp -r ${CBLAS_HEADERS}/gsl ${POD}/Headers
+cp -r ${GSL_HEADERS}/gsl ${POD}/Headers
+cp ../LICENSE ${POD}
+cp -r ${UNIVERSAL}/libgsl.xcframework ${POD}
+cp -r ${UNIVERSAL}/libgslcblas.xcframework ${POD}
+
+cd ${POD}
+zip -r pod-libgsl.zip ./*
