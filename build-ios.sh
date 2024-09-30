@@ -89,8 +89,8 @@ Build
 
 # # Create universal binary
 rm "${PREFIX}/include/gsl/test_source.c" || true
-rm -r "${UNIVERSAL}/libgsl.xcframework" || true
-rm -r "${UNIVERSAL}/libgslcblas.xcframework" || true
+rm -r "${UNIVERSAL}/gsl.xcframework" || true
+rm -r "${UNIVERSAL}/gslcblas.xcframework" || true
 
 CBLAS_HEADERS="${PREFIX}/cblasinclude"
 mkdir -p "${CBLAS_HEADERS}/gsl"
@@ -100,22 +100,22 @@ xcodebuild -create-xcframework \
     -library ${PLATFORMS}/ios-arm64/lib/libgslcblas.a -headers ${CBLAS_HEADERS} \
     -library ${PLATFORMS}/ios-arm64-simulator/lib/libgslcblas.a  -headers ${CBLAS_HEADERS} \
     -library ${PLATFORMS}/macos-x86_64-arm64/lib/libgslcblas.a  -headers ${CBLAS_HEADERS} \
-    -output ${UNIVERSAL}/libgslcblas.xcframework;
+    -output ${UNIVERSAL}/gslcblas.xcframework;
 
 GSL_HEADERS="${PREFIX}/include"
 xcodebuild -create-xcframework \
     -library ${PLATFORMS}/ios-arm64/lib/libgsl.a -headers ${GSL_HEADERS} \
     -library ${PLATFORMS}/ios-arm64-simulator/lib/libgsl.a  -headers ${GSL_HEADERS} \
     -library ${PLATFORMS}/macos-x86_64-arm64/lib/libgsl.a  -headers ${GSL_HEADERS} \
-    -output ${UNIVERSAL}/libgsl.xcframework;
+    -output ${UNIVERSAL}/gsl.xcframework;
 
 rm -r ${POD} || true
 mkdir -p ${POD}/Headers
 cp -r ${CBLAS_HEADERS}/gsl ${POD}/Headers
 cp -r ${GSL_HEADERS}/gsl ${POD}/Headers
 cp ../LICENSE ${POD}
-cp -r ${UNIVERSAL}/libgsl.xcframework ${POD}
-cp -r ${UNIVERSAL}/libgslcblas.xcframework ${POD}
+cp -r ${UNIVERSAL}/gsl.xcframework ${POD}
+cp -r ${UNIVERSAL}/gslcblas.xcframework ${POD}
 
 cd ${POD}
 zip -r pod-libgsl.zip ./*

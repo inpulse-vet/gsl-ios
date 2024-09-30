@@ -8,11 +8,16 @@
 
 Pod::Spec.new do |spec|
 
-  spec.name         = "gsl-ios"
+  spec.name         = "libgsl"
   spec.version      = "2.8.0"
-  spec.summary      = "iOS frameworks and cocoapods for GNU Scientific Library"
+  spec.summary      = "iOS pod for GNU Scientific Library"
+  spec.source       = { :http => "https://github.com/inpulse-vet/gsl-ios/releases/download/2.8.0/pod-libgsl-2.8.0.zip" }
 
   spec.description  = <<-DESC
+  GNU Scientific Library built for platforms:
+    - iOS arm64
+    - iOS Simulator arm64
+    - macOS arm64 and x86_64
                    DESC
 
   spec.homepage     = "https://github.com/inpulse-vet/gsl-ios"
@@ -21,15 +26,13 @@ Pod::Spec.new do |spec|
 
   spec.author             = { "INpulse" => "contato@inpulse.vet" }
 
-  spec.ios.deployment_target = "8.0"
+  spec.ios.deployment_target = "12.0"
   spec.osx.deployment_target = "10.14"
   
   spec.static_framework = true
   spec.source_files = "Headers/**/*.h"
-  spec.libraries: "c",
+  spec.libraries = "c",
 
-  spec.source       = { :git => "https://github.com/inpulse-vet/gsl-ios.git", :tag => "v#{spec.version}" }
-
-  spec.vendored_frameworks = "libgsl.framework", "libgslcblas.xcframework"
+  spec.vendored_frameworks = "gsl.xcframework", "gslcblas.xcframework"
 
 end
