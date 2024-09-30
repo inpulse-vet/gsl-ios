@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 
-  spec.name         = "libgsl"
+  spec.name         = "gsl"
   spec.version      = "2.8.0"
   spec.summary      = "iOS pod for GNU Scientific Library"
   spec.source       = { :http => "https://github.com/inpulse-vet/gsl-ios/releases/download/2.8.0/pod-libgsl-2.8.0.zip" }
