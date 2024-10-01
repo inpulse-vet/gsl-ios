@@ -7,7 +7,7 @@ MakeFramework() {
     FRAMEWORK_PATH=${FRAMEWORK}/${PLATFORM}/${LIB}.framework
     mkdir -p ${FRAMEWORK_PATH}/Headers
     cp -r ${PREFIX}/${LIB}include/gsl ${FRAMEWORK_PATH}/Headers
-    cp ${PLATFORMS}/${PLATFORM}/lib/lib${LIB}.a ${FRAMEWORK_PATH}/${LIB}
+    lipo -create ${PLATFORMS}/${PLATFORM}/lib/lib${LIB}.a -output ${FRAMEWORK_PATH}/${LIB}
     cp ../${LIB}.Info.plist ${FRAMEWORK_PATH}/Info.plist
 }
 
@@ -55,3 +55,18 @@ MakeFramework
 PLATFORM=ios-arm64-simulator
 LIB=gsl
 MakeFramework
+
+rm -r ${UNIVERSAL} || true
+mkdir -p ${UNIVERSAL}
+
+xcodebuild -create-xcframework \
+    -framework ${FRAMEWORK}/ios-arm64/gslcblas.framework \
+    -framework ${FRAMEWORK}/ios-arm64-simulator/gslcblas.framework \
+    -framework ${FRAMEWORK}/macos-x86_64-arm64/gslcblas.framework \
+    -output ${UNIVERSAL}/gslcblas.xcframework;
+
+xcodebuild -create-xcframework \
+    -framework ${FRAMEWORK}/ios-arm64/gsl.framework \
+    -framework ${FRAMEWORK}/ios-arm64-simulator/gsl.framework \
+    -framework ${FRAMEWORK}/macos-x86_64-arm64/gsl.framework \
+    -output ${UNIVERSAL}/gsl.xcframework;
