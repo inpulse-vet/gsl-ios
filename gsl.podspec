@@ -17,14 +17,14 @@ Pod::Spec.new do |spec|
 
   spec.author             = { "INpulse" => "contato@inpulse.vet" }
 
-  subspec "libgsl" do |sp|
+  spec.subspec "libgsl" do |sp|
     sp.source = { :http => "https://github.com/inpulse-vet/gsl-ios/releases/download/2.8.0/pod-libgsl-2.8.0.zip" }
-    spec.ios.deployment_target = "12.0"
-    spec.osx.deployment_target = "10.14"
+    sp.ios.deployment_target = "12.0"
+    sp.osx.deployment_target = "10.14"
   
-    spec.static_framework = true
-    spec.source_files = "Headers/**/*.h"
-    spec.libraries = "c",
-    spec.vendored_frameworks = "gsl.xcframework", "gslcblas.xcframework"
+    sp.static_framework = true
+    sp.source_files = "Headers/**/*.h"
+    sp.libraries = "c",
+    sp.vendored_frameworks = "gsl.xcframework", "gslcblas.xcframework"
   end
 end
